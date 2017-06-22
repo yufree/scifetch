@@ -1,11 +1,11 @@
 Package: scifetch
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Fetch literature data from pubmed and google scholar
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
+Imports: tibble, dplyr, purrr, xml2, stringr, tidyr
+Author: Miao Yu
+Maintainer: Miao Yu <yufreecas@gmail.com>
+Description: 
+    Fetch literature data from pubmed and google scholar in a tidyverse way. This package is written under tidyverse frame.
+License: GPL-2
+RoxygenNote: 6.0.1

@@ -1,4 +1,15 @@
-#'
+#' Fetch xml file from pubmed
+#' @param query the NCBI Entrez for search
+#' @param start begin item
+#' @param end finish item
+#' @return xml object
+#' @seealso getpubmedtbl
+#' @examples \dontrun{
+#' library(scifetch)
+#' query <- 'janusz pawliszyn[AU]'
+#' z <- getpubmed('janusz pawliszyn[AU]')
+#' }
+#' @export
 getpubmed <- function(query, start = 1, end = 100){
         query <- as.character(query)
         query <- gsub(" ", "+", query, fixed = TRUE)
@@ -29,8 +40,18 @@ getpubmed <- function(query, start = 1, end = 100){
         xml2 <- xml2::read_xml(efetch_url)
         return(xml2)
 }
-
-getpubmeddf <- function(xml2){
+#' Get the basic data from xml
+#' @param xml2 the xml object from getpubmed
+#' @seealso getpubmed
+#' @return tibble object
+#' @examples \dontrun{
+#' library(scifetch)
+#' query <- 'janusz pawliszyn[AU]'
+#' z <- getpubmed('janusz pawliszyn[AU]')
+#' z2 <- getpubmedtbl(z)}
+#' @importFrom dplyr %>%
+#' @export
+getpubmedtbl <- function(xml2){
         options(warn = -1)
         getabs <- function(list){
                 if (length(list) > 2){
@@ -84,16 +105,14 @@ getpubmeddf <- function(xml2){
                 stringr::str_replace_all('\"\\)',"") %>%
                 unlist()
 
-        paperdf <- as.tibble(cbind(journal,title,year,month,day,abstract)) %>%
-                mutate(day = case_when(is.na(day) ~ '01', !is.na(day) ~ day)) %>%
-                mutate(month = case_when(!(month %in% month.abb) & is.na(month) ~ 'Jan', !(month %in% month.abb) & !is.na(month) ~ month.abb[as.numeric(month)], month %in% month.abb ~ month)) %>%
-                unite(date, year, month, day, sep = '') %>%
-                mutate(date = as.Date(date,'%Y%b%d')) %>%
-                bind_cols(line = 1:length(title))
+        paperdf <- tibble::as.tibble(cbind(journal,title,year,month,day,abstract)) %>%
+                dplyr::mutate(day = dplyr::case_when(is.na(day) ~ '01', !is.na(day) ~ day)) %>%
+                dplyr::mutate(month = dplyr::case_when(!(month %in% month.abb) & is.na(month) ~ 'Jan', !(month %in% month.abb) & !is.na(month) ~ month.abb[as.numeric(month)], month %in% month.abb ~ month)) %>%
+                tidyr::unite(date, year, month, day, sep = '') %>%
+                dplyr::mutate(date = as.Date(date,'%Y%b%d')) %>%
+                dplyr::bind_cols(line = 1:length(title))
         options(warn = 0)
         return(paperdf)
 }
-query <- 'janusz pawliszyn[AU]'
-z <- getpubmed('janusz pawliszyn[AU]')
-z2 <- getpubmeddf(z)
+
 
