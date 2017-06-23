@@ -32,7 +32,7 @@ getpubmed <- function(query, start = 1, end = 100){
                            "&query_key=",
                            list$QueryKey[[1]],
                            "&retstart=",
-                           start,
+                           start-1,
                            "&retmax=",
                            end,
                            "&retmode=xml",
