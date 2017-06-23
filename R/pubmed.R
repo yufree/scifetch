@@ -31,7 +31,7 @@ getpubmed <- function(query, start = 1, end = 100){
                            list$WebEnv[[1]],
                            "&query_key=",
                            list$QueryKey[[1]],
-                           "&retstart=1",
+                           "&retstart=",
                            start,
                            "&retmax=",
                            end,
