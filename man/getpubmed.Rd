@@ -23,7 +23,7 @@ Fetch xml file from pubmed
 \dontrun{
 library(scifetch)
 query <- 'janusz pawliszyn[AU]'
-z <- getpubmed('janusz pawliszyn[AU]')
+z <- getpubmed(query)
 }
 }
 \seealso{

@@ -19,7 +19,7 @@ Get the basic data from xml
 \dontrun{
 library(scifetch)
 query <- 'janusz pawliszyn[AU]'
-z <- getpubmed('janusz pawliszyn[AU]')
+z <- getpubmed(query)
 z2 <- getpubmedtbl(z)}
 }
 \seealso{
