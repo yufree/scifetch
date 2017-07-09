@@ -7,7 +7,7 @@
 #' @examples \dontrun{
 #' library(scifetch)
 #' query <- 'janusz pawliszyn[AU]'
-#' z <- getpubmed('janusz pawliszyn[AU]')
+#' z <- getpubmed(query)
 #' }
 #' @export
 getpubmed <- function(query, start = 1, end = 100){
@@ -47,7 +47,7 @@ getpubmed <- function(query, start = 1, end = 100){
 #' @examples \dontrun{
 #' library(scifetch)
 #' query <- 'janusz pawliszyn[AU]'
-#' z <- getpubmed('janusz pawliszyn[AU]')
+#' z <- getpubmed(query)
 #' z2 <- getpubmedtbl(z)}
 #' @importFrom dplyr %>%
 #' @export
