@@ -3,4 +3,5 @@
 export(getgsauthor)
 export(getpubmed)
 export(getpubmedtbl)
+export(getrss)
 importFrom(dplyr,"%>%")
