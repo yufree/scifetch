@@ -1,5 +1,6 @@
 #' Fetch rss into tibble
 #' @param feed feed address
+#' @param abslength lenghth of the description, default 500
 #' @return tibble object
 #' @seealso getpubmed
 #' @examples \dontrun{
@@ -8,7 +9,7 @@
 #' z <- getrss(feed)
 #' }
 #' @export
-getrss <- function(feed){
+getrss <- function(feed, abslength = 500){
         formats <- c("a d b Y H:M:S z", "a, d b Y H:M z",
                      "Y-m-d H:M:S z", "d b Y H:M:S",
                      "d b Y H:M:S z", "a b d H:M:S z Y",
@@ -21,11 +22,11 @@ getrss <- function(feed){
 
                 results <- tibble::tibble(
                         title = items$title,
-                        update = lubridate::parse_date_time(items$date_published, orders = formats),
-                        date = lubridate::parse_date_time(items$date_published, orders = formats),
-                        link = items$url,
+                        date = lubridate::parse_date_time(items$date_published, orders = formats) %>%
+                                as.character(),
+                        linkTitle = items$url,
                         source = res$title,
-                        abs = items$content_html
+                        description = items$content_html
                 )
 
                 return(results)
@@ -42,14 +43,12 @@ getrss <- function(feed){
 
                         res <- suppressWarnings({tibble::tibble(
                                 title = xml2::xml_text(xml2::xml_find_all(site, "rss:title", ns = ns)),
-                                update = xml2::xml_text(xml2::xml_find_first(channel,
-                                                                             "rss:lastBuildDate", ns = ns)) %>%
-                                        lubridate::parse_date_time(orders = formats),
                                 date = xml2::xml_text(xml2::xml_find_first(site, "rss:pubDate", ns = ns)) %>%
-                                        lubridate::parse_date_time(orders = formats),
-                                link = xml2::xml_text(xml2::xml_find_all(site, "rss:link", ns = ns)),
+                                        lubridate::parse_date_time(orders = formats) %>%
+                                        as.character(),
+                                linkTitle = xml2::xml_text(xml2::xml_find_all(site, "rss:link", ns = ns)),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "rss:title", ns = ns)),
-                                abs = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))
+                                description = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))
                         )})
                 } else{
 
@@ -57,14 +56,12 @@ getrss <- function(feed){
 
                         res <- suppressWarnings({tibble::tibble(
                                 title = xml2::xml_text(xml2::xml_find_first(site, "title")),
-                                update = xml2::xml_text(xml2::xml_find_first(channel,
-                                                                             "lastBuildDate")) %>%
-                                        lubridate::parse_date_time(orders = formats),
                                 date = xml2::xml_text(xml2::xml_find_first(site, "pubDate")) %>%
-                                        lubridate::parse_date_time(orders = formats),
-                                link = xml2::xml_text(xml2::xml_find_first(site, "link")),
+                                        lubridate::parse_date_time(orders = formats) %>%
+                                        as.character(),
+                                linkTitle = xml2::xml_text(xml2::xml_find_first(site, "link")),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "title")),
-                                abs = xml2::xml_text(xml2::xml_find_first(site, "description"))
+                                description = xml2::xml_text(xml2::xml_find_first(site, "description"))
                         )})
 
                         res <- Filter(function(x) !all(is.na(x)), res)
@@ -76,17 +73,18 @@ getrss <- function(feed){
                 channel <- xml2::xml_find_all(doc, "channel", ns = xml2::xml_ns(doc))
                 site <- xml2::xml_find_all(channel, "item")
 
+
                 res <- tibble::tibble(
                         title = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc), "title")),
-                        update = xml2::xml_text(xml2::xml_find_first(channel, ns = xml2::xml_ns(doc), "lastBuildDate"))%>%
-                                lubridate::parse_date_time(orders = formats),
                         date = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
                                                                                 "pubDate")) %>%
-                                lubridate::parse_date_time(orders = formats),
-                        link = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
+                                lubridate::parse_date_time(orders = formats) %>%
+                                as.character(),
+                        linkTitle = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
                                                                         "link")),
                         source = xml2::xml_text(xml2::xml_find_first(channel, ns = xml2::xml_ns(doc), "title")),
-                        abs = xml2::xml_text(xml2::xml_find_all(site, ns = xml2::xml_ns(doc), "description")))
+                        description = xml2::xml_text(xml2::xml_find_all(site, ns = xml2::xml_ns(doc), "description")) %>%
+                        substr(start=1, stop=abslength))
                 return(res)
         }
 

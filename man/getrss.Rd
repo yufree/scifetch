@@ -4,7 +4,7 @@
 \alias{getrss}
 \title{Fetch rss into tibble}
 \usage{
-getrss(feed)
+getrss(feed, abslength = 300)
 }
 \arguments{
 \item{feed}{feed address}
