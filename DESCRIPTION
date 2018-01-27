@@ -2,7 +2,7 @@ Package: scifetch
 Type: Package
 Title: Fetch literature data from pubmed, google scholar and RSS
 Version: 0.1.0
-Imports: tibble, dplyr, purrr, xml2, stringr, tidyr, rvest,jsonlite,lubridate
+Imports: tibble, dplyr, purrr, xml2, stringr, tidyr, rvest,jsonlite,lubridate, httr
 Author: Miao Yu
 Maintainer: Miao Yu <yufreecas@gmail.com>
 Description: 

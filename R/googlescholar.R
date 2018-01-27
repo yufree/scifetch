@@ -14,56 +14,56 @@ getgsauthor <- function(id, start = 1, end = 100) {
         url <- sprintf(url_template, id, start-1, end)
 
         cites <- url %>%
-                read_html() %>%
-                html_nodes(xpath="//tr[@class='gsc_a_tr']")
+                xml2::read_html() %>%
+                rvest::html_nodes(xpath="//tr[@class='gsc_a_tr']")
 
         title <- cites %>%
-                html_nodes(".gsc_a_at") %>%
-                html_text()
+                rvest::html_nodes(".gsc_a_at") %>%
+                rvest::html_text()
 
         pubid <- cites %>%
-                html_nodes(".gsc_a_at") %>%
-                html_attr("href") %>%
-                str_extract(":.*$") %>%
-                str_sub(start=2)
+                rvest::html_nodes(".gsc_a_at") %>%
+                rvest::html_attr("href") %>%
+                stringr::str_extract(":.*$") %>%
+                stringr::str_sub(start=2)
 
         doc_id <- cites %>%
-                html_nodes(".gsc_a_ac") %>%
-                html_attr("href") %>%
-                str_extract("cites=.*$") %>%
-                str_sub(start=7)
+                rvest::html_nodes(".gsc_a_ac") %>%
+                rvest::html_attr("href") %>%
+                stringr::str_extract("cites=.*$") %>%
+                stringr::str_sub(start=7)
 
         cited_by <- suppressWarnings(
                 cites %>%
-                        html_nodes(".gsc_a_ac") %>%
-                        html_text() %>%
+                        rvest::html_nodes(".gsc_a_ac") %>%
+                        rvest::html_text() %>%
                         as.numeric(.) %>%
                         replace(is.na(.), 0))
 
         year <- cites %>%
-                html_nodes(".gsc_a_y") %>%
-                html_text() %>%
+                rvest::html_nodes(".gsc_a_y") %>%
+                rvest::html_text() %>%
                 as.numeric()
 
         authors <- cites %>%
-                html_nodes("td .gs_gray") %>%
-                html_text() %>%
+                rvest::html_nodes("td .gs_gray") %>%
+                rvest::html_text() %>%
                 subset(c(TRUE,FALSE))
 
         details <- cites %>%
-                html_nodes("td .gs_gray") %>%
-                html_text() %>%
+                rvest::html_nodes("td .gs_gray") %>%
+                rvest::html_text() %>%
                 subset(c(FALSE,TRUE))
 
         first_digit <- as.numeric(regexpr("[\\[\\(]?\\d", details)) - 1
-        journal <- str_trim(str_sub(details, end=first_digit)) %>%
-                str_replace(",$", "")
+        journal <- stringr::str_trim(stringr::str_sub(details, end=first_digit)) %>%
+                stringr::str_replace(",$", "")
 
-        numbers <- str_sub(details, start=first_digit) %>%
-                str_trim() %>%
-                str_sub(end=-5) %>%
-                str_trim() %>%
-                str_replace(",$", "")
+        numbers <- stringr::str_sub(details, start=first_digit) %>%
+                stringr::str_trim() %>%
+                stringr::str_sub(end=-5) %>%
+                stringr::str_trim() %>%
+                stringr::str_replace(",$", "")
 
         data <- tibble::as_tibble(cbind(
                 title = title,
