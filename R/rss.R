@@ -10,6 +10,7 @@
 #' }
 #' @export
 getrss <- function(feed, abslength = 500){
+        # This function is modified from tidyRSS and credits should belong to the author of tidyRSS package
         formats <- c("a d b Y H:M:S z", "a, d b Y H:M z",
                      "Y-m-d H:M:S z", "d b Y H:M:S",
                      "d b Y H:M:S z", "a b d H:M:S z Y",
