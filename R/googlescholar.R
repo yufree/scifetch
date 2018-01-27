@@ -37,8 +37,8 @@ getgsauthor <- function(id, start = 1, end = 100) {
                 cites %>%
                         rvest::html_nodes(".gsc_a_ac") %>%
                         rvest::html_text() %>%
-                        as.numeric(.) %>%
-                        replace(is.na(.), 0))
+                        as.numeric() %>%
+                        replace(is.na(), 0))
 
         year <- cites %>%
                 rvest::html_nodes(".gsc_a_y") %>%
