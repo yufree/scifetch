@@ -4,10 +4,12 @@
 \alias{getrss}
 \title{Fetch rss into tibble}
 \usage{
-getrss(feed, abslength = 300)
+getrss(feed, abslength = 500)
 }
 \arguments{
 \item{feed}{feed address}
+
+\item{abslength}{lenghth of the description, default 500}
 }
 \value{
 tibble object
