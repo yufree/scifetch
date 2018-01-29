@@ -28,7 +28,7 @@ getrss <- function(feed, abslength = 500){
                         linkTitle = items$url,
                         source = res$title,
                         description = items$content_html%>%
-                                substr(start=1, stop=abslength))
+                                substr(start=1, stop=abslength)
                 )
 
                 return(results)
@@ -51,7 +51,7 @@ getrss <- function(feed, abslength = 500){
                                 linkTitle = xml2::xml_text(xml2::xml_find_all(site, "rss:link", ns = ns)),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "rss:title", ns = ns)),
                                 description = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))%>%
-                                        substr(start=1, stop=abslength))
+                                        substr(start=1, stop=abslength)
                         )})
                 } else{
 
@@ -65,7 +65,7 @@ getrss <- function(feed, abslength = 500){
                                 linkTitle = xml2::xml_text(xml2::xml_find_first(site, "link")),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "title")),
                                 description = xml2::xml_text(xml2::xml_find_first(site, "description"))%>%
-                                        substr(start=1, stop=abslength))
+                                        substr(start=1, stop=abslength)
                         )})
 
                         res <- Filter(function(x) !all(is.na(x)), res)
