@@ -1,6 +1,5 @@
 #' Fetch rss into tibble
 #' @param feed feed address
-#' @param abslength lenghth of the description, default 500
 #' @return tibble object
 #' @seealso getpubmed
 #' @examples \dontrun{
@@ -9,7 +8,7 @@
 #' z <- getrss(feed)
 #' }
 #' @export
-getrss <- function(feed, abslength = 500){
+getrss <- function(feed){
         # This function is modified from tidyRSS and credits should belong to the author of tidyRSS package
         formats <- c("a d b Y H:M:S z", "a, d b Y H:M z",
                      "Y-m-d H:M:S z", "d b Y H:M:S",
@@ -27,8 +26,7 @@ getrss <- function(feed, abslength = 500){
                                 as.character(),
                         linkTitle = items$url,
                         source = res$title,
-                        description = items$content_html%>%
-                                substr(start=1, stop=abslength)
+                        description = items$content_html
                 )
 
                 return(results)
@@ -50,8 +48,7 @@ getrss <- function(feed, abslength = 500){
                                         as.character(),
                                 linkTitle = xml2::xml_text(xml2::xml_find_all(site, "rss:link", ns = ns)),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "rss:title", ns = ns)),
-                                description = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))%>%
-                                        substr(start=1, stop=abslength)
+                                description = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))
                         )})
                 } else{
 
@@ -64,8 +61,7 @@ getrss <- function(feed, abslength = 500){
                                         as.character(),
                                 linkTitle = xml2::xml_text(xml2::xml_find_first(site, "link")),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "title")),
-                                description = xml2::xml_text(xml2::xml_find_first(site, "description"))%>%
-                                        substr(start=1, stop=abslength)
+                                description = xml2::xml_text(xml2::xml_find_first(site, "description"))
                         )})
 
                         res <- Filter(function(x) !all(is.na(x)), res)
@@ -87,8 +83,7 @@ getrss <- function(feed, abslength = 500){
                         linkTitle = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
                                                                         "link")),
                         source = xml2::xml_text(xml2::xml_find_first(channel, ns = xml2::xml_ns(doc), "title")),
-                        description = xml2::xml_text(xml2::xml_find_all(site, ns = xml2::xml_ns(doc), "description")) %>%
-                        substr(start=1, stop=abslength))
+                        description = xml2::xml_text(xml2::xml_find_all(site, ns = xml2::xml_ns(doc), "description")))
                 return(res)
         }
 
