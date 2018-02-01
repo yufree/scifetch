@@ -23,7 +23,7 @@ getrss <- function(feed){
                 results <- tibble::tibble(
                         title = items$title,
                         date = lubridate::parse_date_time(items$date_published, orders = formats) %>%
-                                as.character(),
+                                as.character() %>% substr(1,10),
                         linkTitle = items$url,
                         source = res$title,
                         description = items$content_html
@@ -45,7 +45,7 @@ getrss <- function(feed){
                                 title = xml2::xml_text(xml2::xml_find_all(site, "rss:title", ns = ns)),
                                 date = xml2::xml_text(xml2::xml_find_first(site, "rss:pubDate", ns = ns)) %>%
                                         lubridate::parse_date_time(orders = formats) %>%
-                                        as.character(),
+                                        as.character() %>% substr(1,10),
                                 linkTitle = xml2::xml_text(xml2::xml_find_all(site, "rss:link", ns = ns)),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "rss:title", ns = ns)),
                                 description = xml2::xml_text(xml2::xml_find_first(site, "rss:description", ns = ns))
@@ -58,7 +58,7 @@ getrss <- function(feed){
                                 title = xml2::xml_text(xml2::xml_find_first(site, "title")),
                                 date = xml2::xml_text(xml2::xml_find_first(site, "pubDate")) %>%
                                         lubridate::parse_date_time(orders = formats) %>%
-                                        as.character(),
+                                        as.character() %>% substr(1,10),
                                 linkTitle = xml2::xml_text(xml2::xml_find_first(site, "link")),
                                 source = xml2::xml_text(xml2::xml_find_first(channel, "title")),
                                 description = xml2::xml_text(xml2::xml_find_first(site, "description"))
@@ -79,7 +79,7 @@ getrss <- function(feed){
                         date = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
                                                                                 "pubDate")) %>%
                                 lubridate::parse_date_time(orders = formats) %>%
-                                as.character(),
+                                as.character() %>% substr(1,10),
                         linkTitle = xml2::xml_text(xml2::xml_find_first(site, ns = xml2::xml_ns(doc),
                                                                         "link")),
                         source = xml2::xml_text(xml2::xml_find_first(channel, ns = xml2::xml_ns(doc), "title")),
