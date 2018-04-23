@@ -95,11 +95,13 @@ getrss <- function(feed){
 
                         doc <- try(httr::GET(feed), silent = TRUE)
 
-                        if(grepl("json", doc)){
+                        if(grepl("xml", doc)){
+                                doc <- doc %>%
+                                        str_replace_all("/[^\\x{0009}\\x{000a}\\x{000d}\\x{0020}-\\x{D7FF}\\x{E000}-\\x{FFFD}]+/u",'') %>%
+                                        xml2::read_xml( encoding = 'UTF-8')
+                        } else{
                                 result <- json_parse(feed)
                                 return(result)
-                        } else{
-                                doc <- doc %>% xml2::read_xml()
                         }
 
                         if(unique(grepl('try-error', class(doc)))){
