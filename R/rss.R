@@ -95,9 +95,9 @@ getrss <- function(feed){
 
                         doc <- try(httr::GET(feed), silent = TRUE)
 
-                        if(grepl("xml", doc)){
+                        if(any(grepl("xml", doc$all_headers))){
                                 doc <- doc %>%
-                                        xml2::read_xml( encoding = 'UTF-8')
+                                        xml2::read_xml()
                         } else{
                                 result <- json_parse(feed)
                                 return(result)
