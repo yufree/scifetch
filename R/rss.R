@@ -100,7 +100,12 @@ getrss <- function(feed){
                                         xml2::read_xml()
                         } else{
                                 result <- json_parse(feed)
-                                return(result)
+                                if(NROW(result)>0){
+                                        return(result)
+                                }else{
+                                        return(NULL)
+                                }
+
                         }
 
                         if(unique(grepl('try-error', class(doc)))){
@@ -112,12 +117,20 @@ getrss <- function(feed){
 
                                 result <- atom_parse(doc)
 
-                                return(result)
+                                if(NROW(result)>0){
+                                        return(result)
+                                }else{
+                                        return(NULL)
+                                }
 
                         } else{
                                 result <- rss_parse(doc)
 
-                                return(result)
+                                if(NROW(result)>0){
+                                        return(result)
+                                }else{
+                                        return(NULL)
+                                }
                         }
                 })
         })
