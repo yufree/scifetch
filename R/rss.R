@@ -13,7 +13,7 @@ getrss <- function(feed){
         formats <- c("a d b Y H:M:S z", "a, d b Y H:M z",
                      "Y-m-d H:M:S z", "d b Y H:M:S",
                      "d b Y H:M:S z", "a b d H:M:S z Y",
-                     "a b dH:M:S Y")
+                     "a b dH:M:S Y", "Y-m-d")
         json_parse <- function(feed){
 
                 res <- jsonlite::fromJSON(feed)
