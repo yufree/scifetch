@@ -93,6 +93,7 @@ getrss <- function(feed){
 
                         msg <- "Error in feed parse; please check URL."
 
+                        httr::set_config(httr::config(ssl_verifypeer = 0L))
                         doc <- try(httr::GET(feed), silent = TRUE)
 
                         if(any(grepl("xml", doc$all_headers))){
