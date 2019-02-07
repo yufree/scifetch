@@ -23,14 +23,14 @@ getpubmed <- function(query, start = 1, end = 100){
         xml <- xml2::read_xml(PID)
         # close.connection(tmpConnect)
         list <- xml2::as_list(xml)
-        n <- list$Count[[1]]
+        n <- list$eSearchResult$Count[[1]]
         warning <- paste(n,"records founds")
         message(warning)
         efetch_url = paste("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?",
                            "db=pubmed&WebEnv=",
-                           list$WebEnv[[1]],
+                           list$eSearchResult$WebEnv[[1]],
                            "&query_key=",
-                           list$QueryKey[[1]],
+                           list$eSearchResult$QueryKey[[1]],
                            "&retstart=",
                            start-1,
                            "&retmax=",
@@ -100,7 +100,7 @@ getpubmedtbl <- function(xml2){
                 xml2::as_list() %>%
                 purrr::map(`[[`,'Abstract') %>%
                 purrr::map(getabs) %>%
-                purrr::map_chr(unlist) %>%
+                purrr::map(unlist) %>%
                 stringr::str_replace_all('list\\(\"',"") %>%
                 stringr::str_replace_all('\"\\)',"") %>%
                 unlist()
