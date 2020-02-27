@@ -2,7 +2,7 @@ Package: scifetch
 Type: Package
 Title: Fetch literature data from pubmed, google scholar and RSS
 Version: 0.1.0
-Imports: tibble, dplyr, purrr, xml2, stringr, tidyr, rvest,jsonlite,lubridate, httr
+Imports: tibble, dplyr, purrr, xml2, stringr, tidyr, rvest,jsonlite,lubridate, httr,rcrossref
 Authors@R: person(given = "Miao", family = "YU",
         role = c("aut", "cre"), 
         email = "yufreecas@gmail.com",
@@ -11,4 +11,4 @@ Maintainer: Miao Yu <yufreecas@gmail.com>
 Description: 
     Fetch literature data from pubmed and google scholar in a tidyverse way. This package is written under tidyverse frame.
 License: GPL-2
-RoxygenNote: 6.0.1
+RoxygenNote: 7.0.2

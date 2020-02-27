@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fetch xml file from pubmed — getpubmed • scifetch</title>
+<title>Fetch Bibliographies via DOI — doiref • scifetch</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Fetch xml file from pubmed — getpubmed" />
-<meta property="og:description" content="Fetch xml file from pubmed" />
+<meta property="og:title" content="Fetch Bibliographies via DOI — doiref" />
+<meta property="og:description" content="Fetch Bibliographies via DOI" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,55 +100,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fetch xml file from pubmed</h1>
+    <h1>Fetch Bibliographies via DOI</h1>
     
-    <div class="hidden name"><code>getpubmed.Rd</code></div>
+    <div class="hidden name"><code>doiref.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Fetch xml file from pubmed</p>
+    <p>Fetch Bibliographies via DOI</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getpubmed</span>(<span class='no'>query</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>100</span>)</pre>
+    <pre class="usage"><span class='fu'>doiref</span>(<span class='no'>path</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"apa"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>query</th>
-      <td><p>the NCBI Entrez for search</p></td>
+      <th>path</th>
+      <td><p>file path</p></td>
     </tr>
     <tr>
-      <th>start</th>
-      <td><p>begin item</p></td>
-    </tr>
-    <tr>
-      <th>end</th>
-      <td><p>finish item</p></td>
+      <th>style</th>
+      <td><p>citaiton style, default apa</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>xml object</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>getpubmedtbl</p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>scifetch</span>)
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='st'>'janusz pawliszyn[AU]'</span>
-<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'>getpubmed</span>(<span class='no'>query</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
