@@ -109,7 +109,7 @@ getpubmedtbl <- function(xml2){
                 dplyr::mutate(day = dplyr::case_when(is.na(day) ~ '01', !is.na(day) ~ day)) %>%
                 dplyr::mutate(month = dplyr::case_when(!(month %in% month.abb) & is.na(month) ~ 'Jan', !(month %in% month.abb) & !is.na(month) ~ month.abb[as.numeric(month)], month %in% month.abb ~ month)) %>%
                 tidyr::unite(date, year, month, day, sep = '') %>%
-                dplyr::mutate(date = as.Date(date,'%Y%b%d')) %>%
+                dplyr::mutate(date = lubridate::yms(date)) %>%
                 dplyr::bind_cols(line = 1:length(title))
         options(warn = 0)
         return(paperdf)
